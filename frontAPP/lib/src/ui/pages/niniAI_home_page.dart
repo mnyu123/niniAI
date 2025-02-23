@@ -24,8 +24,8 @@ class niniAIHomePage extends StatelessWidget {
               itemCount: 10, // 임시 데이터
               itemBuilder: (context, index) {
                 return ListTile(
-                  leading: Image.network(
-                    'https://via.placeholder.com/50', // 유튜브 썸네일 대체 이미지
+                  leading: Image.asset(
+                    'assets/pic/ninia_original_1.png', // 임시 : 니니아 원본 사진으로 그냥
                     width: 50,
                     height: 50,
                     fit: BoxFit.cover,
