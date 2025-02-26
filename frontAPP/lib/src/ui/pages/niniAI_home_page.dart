@@ -1,7 +1,25 @@
 import 'package:flutter/material.dart';
+import '../../models/niniAI_video_model.dart';
+import '../../services/niniAI_youtube_service.dart';
 import '../widgets/niniAI_playback_bar.dart';
 
-class niniAIHomePage extends StatelessWidget {
+class niniAIHomePage extends StatefulWidget {
+  @override
+  _niniAIHomePageState createState() => _niniAIHomePageState();
+}
+
+class _niniAIHomePageState extends State<niniAIHomePage> {
+  final NiniaIYtService _service = NiniaIYtService();
+  Future<List<NiniaIVideo>>? _futureVideos;
+  NiniaIVideo? _currentVideo;
+
+  @override
+  void initState() {
+    super.initState();
+    // 3개의 곡만 불러오도록 설정
+    _futureVideos = _service.fetchVideos(page: 0, size: 3);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -11,42 +29,58 @@ class niniAIHomePage extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.search),
             onPressed: () {
-              // TODO: 검색/필터 UI 연결
+              // 검색/필터 UI 연결
             },
           ),
         ],
       ),
       body: Column(
         children: [
-          // 재생목록 영역 (예시: ListView)
           Expanded(
-            child: ListView.builder(
-              itemCount: 10, // 임시 데이터
-              itemBuilder: (context, index) {
-                return ListTile(
-                  leading: Image.asset(
-                    'assets/pic/ninia_original_1.png', // 임시 : 니니아 원본 사진으로 그냥
-                    width: 50,
-                    height: 50,
-                    fit: BoxFit.cover,
-                  ),
-                  title: Text('Song Title ${index + 1}'),
-                  subtitle: Text('Channel Name'),
-                  onTap: () {
-                    // TODO: 선택 시 상세 페이지 혹은 재생 처리
-                  },
-                );
+            child: FutureBuilder<List<NiniaIVideo>>(
+              future: _futureVideos,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting)
+                  return Center(child: CircularProgressIndicator());
+                else if (snapshot.hasError)
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                else if (!snapshot.hasData || snapshot.data!.isEmpty)
+                  return Center(child: Text('No videos available'));
+                else {
+                  List<NiniaIVideo> videos = snapshot.data!;
+                  return ListView.builder(
+                    itemCount: videos.length,
+                    itemBuilder: (context, index) {
+                      NiniaIVideo video = videos[index];
+                      return ListTile(
+                        leading: Image.network(
+                          video.thumbnailUrl,
+                          width: 50,
+                          height: 50,
+                          fit: BoxFit.cover,
+                        ),
+                        title: Text(video.title),
+                        subtitle: Text(video.channelName),
+                        onTap: () {
+                          setState(() {
+                            _currentVideo = video;
+                          });
+                        },
+                      );
+                    },
+                  );
+                }
               },
             ),
           ),
-          // 하단 재생바 (미니 플레이어)
-          niniAIPlaybackBar(),
+          // 하단 재생바 위젯에 선택된 영상 정보를 전달
+          niniAIPlaybackBar(currentVideo: _currentVideo),
         ],
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.playlist_add),
         onPressed: () {
-          // TODO: 플레이리스트 관리/추가 화면 연결
+          // 플레이리스트 관리/추가 화면 연결
         },
       ),
     );

@@ -13,6 +13,9 @@ dependencies:
   cupertino_icons: ^1.0.6
   flutter_staggered_animations: ^1.0.0
   lottie: ^2.2.0
+  http: ^0.13.6
+  audioplayers: ^2.0.0
+  youtube_player_flutter: ^8.1.1
 
 dev_dependencies:
   flutter_test:
@@ -24,4 +27,9 @@ flutter:
   assets:
     - assets/animations/splash_animation.json
     - assets/pic/ninia_original_1.png
+
+  fonts:
+    - family: NotoSansKR
+      fonts:
+        - asset: assets/fonts/NotoSansKR-Regular.ttf
 

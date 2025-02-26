@@ -13,6 +13,7 @@ class niniAIApp extends StatelessWidget {
       title: 'niniAI',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        fontFamily: 'NotoSansKR', // 한글이 잘 보이도록 폰트 지정
       ),
       home: niniAISplashPage(),
     );
