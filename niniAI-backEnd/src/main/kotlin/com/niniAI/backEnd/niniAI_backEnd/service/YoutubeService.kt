@@ -91,11 +91,11 @@ class YouTubeService(
     }
 
     /**
-     * 스케줄러: 30분마다 각 채널에 대해 동영상 업데이트 (필요한 채널 ID를 리스트로 관리)
+     * 스케줄러: 60분마다 각 채널에 대해 동영상 업데이트 (필요한 채널 ID를 리스트로 관리)
      */
-    @Scheduled(fixedRate = 30 * 60 * 1000) // 30분마다 실행
+    @Scheduled(fixedRate = 60 * 60 * 1000) // 30분마다 실행
     fun scheduledUpdate() {
-        // 예시: 관리할 채널 ID 리스트 (니니아 및 관련 AI 노래 채널)
+        // 예시: 관리할 채널 ID 리스트 (니니아 AI 노래 업로드 채널)
         val channelIds = listOf("UC4JIrW6EmHmZcQb8Ygkz23Q")
         channelIds.forEach { updateChannelVideos(it) }
     }
