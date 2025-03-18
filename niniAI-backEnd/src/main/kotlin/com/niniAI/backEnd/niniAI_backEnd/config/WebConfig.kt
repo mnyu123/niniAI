@@ -9,9 +9,7 @@ class WebConfig : WebMvcConfigurer {
     override fun addCorsMappings(registry: CorsRegistry) {
         registry.addMapping("/**")
                 .allowedOrigins(
-                        "http://localhost:3000",    // 개발용 프론트엔드
                         "http://127.0.0.1:3000",
-                        "https://dokhub-love-doksaem.netlify.app",
                         "http://52.79.242.58",
                         "https://www.googleapis.com" // 필요 시
                 )
