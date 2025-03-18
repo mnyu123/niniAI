@@ -1,9 +1,19 @@
+// 파일: lib/main.dart
+
 import 'package:flutter/material.dart';
-import 'package:niniaifrontapp/src/ui/pages/niniAI_splash_page.dart';
-import 'src/ui/pages/niniAI_home_page.dart';
+import 'package:provider/provider.dart';
+import 'src/providers/video_provider.dart';
+import 'src/ui/pages/niniAI_splash_page.dart';
 
 void main() {
-  runApp(niniAIApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => VideoProvider()),
+      ],
+      child: niniAIApp(),
+    ),
+  );
 }
 
 class niniAIApp extends StatelessWidget {
@@ -13,7 +23,7 @@ class niniAIApp extends StatelessWidget {
       title: 'niniAI',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        fontFamily: 'NotoSansKR', // 한글이 잘 보이도록 폰트 지정
+        fontFamily: 'NotoSansKR',
       ),
       home: niniAISplashPage(),
     );

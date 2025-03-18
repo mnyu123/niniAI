@@ -1,3 +1,5 @@
+// 파일: lib/src/ui/widgets/niniAI_playback_bar.dart
+
 import 'package:flutter/material.dart';
 import '../../models/niniAI_video_model.dart';
 import '../pages/niniAI_video_player_page.dart';
@@ -16,7 +18,7 @@ class niniAIPlaybackBar extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Row(
         children: [
-          // 썸네일 표시
+          // 썸네일 영역
           Container(
             width: 50,
             height: 50,
@@ -27,11 +29,13 @@ class niniAIPlaybackBar extends StatelessWidget {
             )
                 : Container(
               color: Colors.blue,
-              child: Center(child: Text('Img', style: TextStyle(color: Colors.white))),
+              child: Center(
+                child: Text('Img', style: TextStyle(color: Colors.white)),
+              ),
             ),
           ),
           SizedBox(width: 8),
-          // 영상 정보 표시
+          // 영상 정보 영역
           Expanded(
             child: currentVideo != null
                 ? Column(
@@ -50,8 +54,9 @@ class niniAIPlaybackBar extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.skip_previous),
             onPressed: onPrevious,
+            tooltip: "이전 곡",
           ),
-          // 재생 버튼: 현재 선택된 영상이 있을 경우 VideoPlayerPage로 이동
+          // 재생 버튼: 선택된 영상이 있을 경우 재생 페이지로 이동
           IconButton(
             icon: Icon(Icons.play_arrow),
             onPressed: () {
@@ -64,11 +69,13 @@ class niniAIPlaybackBar extends StatelessWidget {
                 );
               }
             },
+            tooltip: "재생",
           ),
           // 다음 곡 버튼
           IconButton(
             icon: Icon(Icons.skip_next),
             onPressed: onNext,
+            tooltip: "다음 곡",
           ),
         ],
       ),
